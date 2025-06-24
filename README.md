@@ -1,3 +1,8 @@
+Equipo conformado por Richard Cedeño y Jaime Arrué.
+https://github.com/rcaurasma/ecofood-react-RC-JA/
+
+
+
 # React + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
