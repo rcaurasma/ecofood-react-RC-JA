@@ -3,17 +3,42 @@ import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Home from "../pages/Home";
 import ProtectedRoute from "./ProtectedRoute";
+import RecuperarContrasena from "../pages/RecuperarContrasena";
+import ProtectedByRole from "./ProtectedByRole";
+//CLiente
+import ClienteDashboard from '../pages/cliente/ClienteDashboard';
+//Admin
+import AdminLayout from  "../components/layouts/Admin/AdminLayout"
+import AdminDashboard from "../pages/admin/AdminDashboard";
+import AdminProductos from '../pages/admin/AdminProductos';
+
+
+
 export default function AppRouter() {
-return (
-<Routes>
-<Route path="/login" element={<Login />} />
-<Route path="/" element={<Login />} />
-<Route path="/registro" element={<Register />} />
-<Route path="/home" element={
-<ProtectedRoute>
-<Home />
-</ProtectedRoute>
-} />
-</Routes>
-);
+ return (
+ <Routes>
+ <Route path="/login" element={<Login />} />
+ <Route path="/" element={<Login />} />
+ <Route path="/recuperar" element={<RecuperarContrasena />} />
+ <Route path="/registro" element={<Register />} />
+ <Route path="/home" element={
+ <ProtectedRoute>
+ <Home />
+ </ProtectedRoute>
+ } />
+ <Route path="/cliente/dashboard" element={
+ <ProtectedByRole allowed={["cliente"]}>
+ <ClienteDashboard />
+ </ProtectedByRole>
+ } />
+ <Route path="/admin" element={
+ <ProtectedByRole allowed={["admin"]}>
+ <AdminLayout />
+ </ProtectedByRole>
+ }>
+ <Route path="dashboard" element={<AdminDashboard />} />
+ <Route path="productos" element={<AdminProductos />} />
+ </Route>
+ </Routes>
+ );
 }
