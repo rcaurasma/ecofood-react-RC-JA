@@ -19,20 +19,91 @@ export default function Register() {
     return pwd.length >= 6 && /[a-zA-Z]/.test(pwd) && /[0-9]/.test(pwd);
   };
 
-  const handleRegister = async (e) => {
-    e.preventDefault();
+  const validateName = (name) => {
+    // Solo letras, espacios y acentos, máximo 50 caracteres
+    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    return name.length >= 2 && name.length <= 50 && nameRegex.test(name);
+  };
+
+  const validatePhone = (phone) => {
+    // Solo números, espacios, guiones y paréntesis, máximo 15 caracteres
+    const phoneRegex = /^[0-9\s\-()+ ]+$/;
+    return phone.length === 0 || (phone.length >= 8 && phone.length <= 15 && phoneRegex.test(phone));
+  };
+
+  const validateAddress = (address) => {
+    // Letras, números, espacios y algunos caracteres especiales, máximo 100 caracteres
+    return address.length >= 5 && address.length <= 100;
+  };
+
+  const validateComuna = (comuna) => {
+    // Solo letras, espacios y acentos, máximo 30 caracteres
+    const comunaRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
+    return comuna.length >= 2 && comuna.length <= 30 && comunaRegex.test(comuna);
+  };
+
+  const validateAllFields = () => {
+    if (!validateName(nombre)) {
+      Swal.fire(
+        "Nombre inválido",
+        "El nombre debe tener entre 2 y 50 caracteres y solo contener letras.",
+        "warning"
+      );
+      return false;
+    }
+
+    if (!validator.isEmail(email)) {
+      Swal.fire("Correo inválido", "Por favor ingresa un correo válido.", "warning");
+      return false;
+    }
+
     if (!validatePassword(password)) {
       Swal.fire(
         "Contraseña débil",
         "La contraseña debe tener al menos 6 caracteres y combinar letras y números.",
         "warning"
       );
+      return false;
+    }
+
+    if (!validateAddress(direccion)) {
+      Swal.fire(
+        "Dirección inválida",
+        "La dirección debe tener entre 5 y 100 caracteres.",
+        "warning"
+      );
+      return false;
+    }
+
+    if (!validateComuna(comuna)) {
+      Swal.fire(
+        "Comuna inválida",
+        "La comuna debe tener entre 2 y 30 caracteres y solo contener letras.",
+        "warning"
+      );
+      return false;
+    }
+
+    if (telefono && !validatePhone(telefono)) {
+      Swal.fire(
+        "Teléfono inválido",
+        "El teléfono debe tener entre 8 y 15 caracteres y solo contener números.",
+        "warning"
+      );
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    
+    // Validar todos los campos antes de proceder
+    if (!validateAllFields()) {
       return;
     }
-    if (!validator.isEmail(email)) {
-      Swal.fire("Correo inválido", "Por favor ingresa un correo válido.", "warning");
-      return;
-    }
+
     try {
       const cred = await createUserWithEmailAndPassword(auth, email, password);
       await saveUserData(cred.user.uid, {
@@ -61,31 +132,68 @@ export default function Register() {
       <form onSubmit={handleRegister}>
         <div className="mb-3">
           <label className="form-label">Nombre completo</label>
-          <input type="text" className="form-control" value={nombre} onChange={(e) => setNombre(e.target.value)} required />
+          <input 
+            type="text" 
+            className="form-control" 
+            value={nombre} 
+            onChange={(e) => setNombre(e.target.value)} 
+            maxLength="50"
+            required 
+          />
         </div>
         <div className="mb-3">
           <label className="form-label">Correo electrónico</label>
-          <input type="email" className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} required />
+          <input 
+            type="email" 
+            className="form-control" 
+            value={email} 
+            onChange={(e) => setEmail(e.target.value)} 
+            maxLength="100"
+            required 
+          />
         </div>
         <div className="mb-3">
           <label className="form-label">Contraseña</label>
-          <input type="password" className="form-control" value={password} onChange={(e) => setPassword(e.target.value)} required />
+          <input 
+            type="password" 
+            className="form-control" 
+            value={password} 
+            onChange={(e) => setPassword(e.target.value)} 
+            maxLength="50"
+            required 
+          />
         </div>
         <div className="mb-3">
           <label className="form-label">Dirección</label>
-          <input type="text" className="form-control" value={direccion} onChange={(e) => setDireccion(e.target.value)} required />
+          <input 
+            type="text" 
+            className="form-control" 
+            value={direccion} 
+            onChange={(e) => setDireccion(e.target.value)} 
+            maxLength="100"
+            required 
+          />
         </div>
         <div className="mb-3">
           <label className="form-label">Comuna</label>
-          <input type="text" className="form-control" value={comuna} onChange={(e) => setComuna(e.target.value)} required />
+          <input 
+            type="text" 
+            className="form-control" 
+            value={comuna} 
+            onChange={(e) => setComuna(e.target.value)} 
+            maxLength="30"
+            required 
+          />
         </div>
         <div className="mb-3">
           <label className="form-label">Teléfono (opcional)</label>
-          <input type="text" className="form-control" value={telefono} onChange={(e) => setTelefono(e.target.value)} />
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Tipo de usuario</label>
-          <input type="text" className="form-control" value="cliente" disabled />
+          <input 
+            type="tel" 
+            className="form-control" 
+            value={telefono} 
+            onChange={(e) => setTelefono(e.target.value)} 
+            maxLength="15"
+          />
         </div>
         <button type="submit" className="btn btn-success">Registrar</button>
       </form>
