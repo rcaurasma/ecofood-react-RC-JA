@@ -10,7 +10,7 @@ import ClienteDashboard from '../pages/cliente/ClienteDashboard';
 //Admin
 import AdminLayout from  "../components/layouts/Admin/AdminLayout"
 import AdminDashboard from "../pages/admin/AdminDashboard";
-import AdminProductos from '../pages/admin/AdminProductos';
+import AdminEmpresas from '../pages/admin/AdminEmpresas';
 import AdminClientes from '../pages/admin/AdminClientes';
 import AdminAdministradores from '../pages/admin/AdminAdministradores';
 
@@ -39,7 +39,7 @@ export default function AppRouter() {
         </ProtectedByRole>
     }>
         <Route path="dashboard" element={<AdminDashboard />} />
-        <Route path="productos" element={<AdminProductos />} />
+        <Route path="empresas" element={<AdminEmpresas />} />
         <Route path="clientes" element={<AdminClientes />} />
         <Route path="administradores" element={<AdminAdministradores />} />
     </Route>

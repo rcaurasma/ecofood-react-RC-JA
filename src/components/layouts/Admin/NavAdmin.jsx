@@ -47,10 +47,10 @@ export default function NavAdmin() {
             </li>
             <li className="nav-item">
               <Link 
-                className={`nav-link ${isActive('/admin/productos') ? 'active' : ''}`}
-                to="/admin/productos"
+                className={`nav-link ${isActive('/admin/empresas') ? 'active' : ''}`}
+                to="/admin/empresas"
               >
-                <i className="fas fa-box me-1"></i>Productos
+                <i className="fas fa-box me-1"></i>Empresas
               </Link>
             </li>
             <li className="nav-item">

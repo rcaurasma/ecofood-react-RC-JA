@@ -128,8 +128,10 @@ export default function Register() {
 
   return (
     <div className="container mt-5">
-      <h2>Registro Cliente</h2>
-      <form onSubmit={handleRegister}>
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-5">
+          <h2 className="text-center mb-4">Registro Cliente</h2>
+          <form onSubmit={handleRegister}>
         <div className="mb-3">
           <label className="form-label">Nombre completo</label>
           <input 
@@ -195,8 +197,19 @@ export default function Register() {
             maxLength="15"
           />
         </div>
-        <button type="submit" className="btn btn-success">Registrar</button>
+        <button type="submit" className="btn btn-success w-100">Registrar</button>
       </form>
+      <div className="text-center mt-3">
+        <button
+          type="button"
+          className="btn btn-link"
+          onClick={() => navigate("/login")}
+        >
+          Volver al Login
+        </button>
+      </div>
+        </div>
+      </div>
     </div>
   );
 }
