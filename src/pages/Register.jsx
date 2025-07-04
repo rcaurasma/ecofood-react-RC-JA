@@ -128,10 +128,12 @@ export default function Register() {
 
   return (
     <div className="container mt-5">
+      
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-5">
           <h2 className="text-center mb-4">Registro Cliente</h2>
           <form onSubmit={handleRegister}>
+
         <div className="mb-3">
           <label className="form-label">Nombre completo</label>
           <input 

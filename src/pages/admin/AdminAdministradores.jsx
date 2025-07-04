@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import {
   getAdministradores,
   updateAdministrador,
-  deleteAdministrador,
+  // deleteAdministrador,
   registrarAdminConAuth
 } from "../../services/adminFirebase";
 
@@ -68,6 +68,7 @@ export default function AdminAdministradores() {
     }
   };
 
+  /* Comentado para evitar eliminar administradores por ahora
   const eliminar = async (id, nombre) => {
     const result = await Swal.fire({
       title: `¿Eliminar administrador "${nombre}"?`,
@@ -76,7 +77,7 @@ export default function AdminAdministradores() {
       showCancelButton: true,
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar"
-    });
+    }); 
 
     if (result.isConfirmed) {
       try {
@@ -87,7 +88,7 @@ export default function AdminAdministradores() {
         Swal.fire("Error", "No se pudo eliminar el administrador", "error");
       }
     }
-  };
+  }; */
 
   const abrirModal = (admin = null) => {
     if (admin) {
@@ -154,12 +155,16 @@ export default function AdminAdministradores() {
                   >
                     <i className="fas fa-edit"></i> Editar
                   </button>
+
+                                    {/*
                   <button 
                     className="btn btn-danger btn-sm" 
                     onClick={() => eliminar(admin.id, admin.nombre)}
                   >
                     <i className="fas fa-trash"></i> Eliminar
                   </button>
+                */}
+
                 </td>
               </tr>
             ))}

@@ -47,9 +47,16 @@ export default function Login() {
     }
   };
 
+      
+              
+
+
   return (
     <div className="container mt-5">
-      <h2>Iniciar Sesión</h2>
+      <div className="row justify-content-center">
+      <div className="col-md-6 col-lg-5">
+      <h2 className=" text-center mb-4">Iniciar Sesión</h2>
+
       <form onSubmit={handleLogin}>
         <div className="mb-3">
           <label className="form-label">Correo Electrónico</label>
@@ -87,6 +94,8 @@ export default function Login() {
       >
         ¿No tienes cuenta? Regístrate aquí
       </button>
+    </div>
+    </div>
     </div>
   );
 }

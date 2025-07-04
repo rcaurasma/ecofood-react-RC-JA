@@ -33,14 +33,15 @@ export default function RecuperarContrasena() {
   };
 
   return (
-
     <div className="container mt-5">
-              <h2 className="card-title text-center mb-4">Recuperar Contraseña</h2>
-              <p className="text-muted text-center mb-4">
-                Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
-              </p>
-              
-              <form onSubmit={handleResetPassword}>
+      <div className="row justify-content-center">
+        <div className="col-md-6 col-lg-5">
+          <h2 className="card-title text-center mb-4">Recuperar Contraseña</h2>
+          <p className="text-muted text-center mb-4">
+            Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
+          </p>
+          
+          <form onSubmit={handleResetPassword}>
                 <div className="mb-3">
                   <label className="form-label">Correo Electrónico</label>
                   <input
@@ -75,6 +76,7 @@ export default function RecuperarContrasena() {
                 </button>
               </div>
             </div>
-        
+          </div>
+        </div>
   );
 }
