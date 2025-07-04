@@ -40,16 +40,13 @@ export default function Login() {
 
       if (datos.tipo === "admin") navigate("/admin/dashboard");
       else if (datos.tipo === "cliente") navigate("/cliente/dashboard");
+      else if (datos.tipo === "empresa") navigate("/empresa/dashboard");
 
 
     } catch {
       Swal.fire("Error", "Credenciales incorrectas o fallo de red", "error");
     }
   };
-
-      
-              
-
 
   return (
     <div className="container mt-5">
@@ -65,6 +62,7 @@ export default function Login() {
             className="form-control"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            maxLength="50"
             required
           />
         </div>
@@ -75,6 +73,7 @@ export default function Login() {
             className="form-control"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            maxLength="50"
             required
           />
         </div>        <button type="submit" className="btn btn-primary">Iniciar Sesión</button>

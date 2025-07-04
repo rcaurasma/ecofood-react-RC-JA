@@ -213,7 +213,7 @@ cargarClientes();
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     disabled={!!clienteActivo}
-                    maxLength="100"
+                    maxLength="50"
                     required
                   />
                   {clienteActivo && (
@@ -230,7 +230,7 @@ cargarClientes();
                     placeholder="Ingrese la comuna"
                     value={formData.comuna}
                     onChange={(e) => setFormData({ ...formData, comuna: e.target.value })}
-                    maxLength="30"
+                    maxLength="50"
                     required
                   />
                 </div>
@@ -242,7 +242,7 @@ cargarClientes();
                     placeholder="Ingrese la dirección completa"
                     value={formData.direccion}
                     onChange={(e) => setFormData({ ...formData, direccion: e.target.value })}
-                    maxLength="100"
+                    maxLength="50"
                   />
                 </div>
                 <div className="mb-3">
@@ -253,7 +253,7 @@ cargarClientes();
                     placeholder="Ej: +56 9 1234 5678"
                     value={formData.telefono}
                     onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                    maxLength="15"
+                    maxLength="50"
                   />
                 </div>
                 {!clienteActivo && (
@@ -265,6 +265,7 @@ cargarClientes();
                       placeholder="Mínimo 6 caracteres"
                       value={formData.password}
                       onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      maxLength="50"
                       minLength="6"
                       required
                     />

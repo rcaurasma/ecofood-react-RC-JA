@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import {
   getEmpresas,
-  createEmpresa,
   updateEmpresa,
-  deleteEmpresa
+  deleteEmpresa,
+  registrarEmpresaConAuth
 } from "../../services/empresaFirebase";
 
 export default function AdminEmpresas() {
@@ -17,7 +17,8 @@ export default function AdminEmpresas() {
     direccion: "",
     comuna: "",
     email: "",
-    telefono: ""
+    telefono: "",
+    password: ""
   });
 
   const cargarEmpresas = async () => {
@@ -60,6 +61,10 @@ export default function AdminEmpresas() {
       Swal.fire("Error", "El teléfono debe tener al menos 8 caracteres", "warning");
       return false;
     }
+    if (!empresaActiva && (!formData.password || formData.password.length < 6)) {
+      Swal.fire("Error", "La contraseña debe tener al menos 6 caracteres", "warning");
+      return false;
+    }
     return true;
   };
 
@@ -68,13 +73,15 @@ export default function AdminEmpresas() {
 
     try {
       if (empresaActiva) {
-        // Editar empresa existente
-        await updateEmpresa(empresaActiva.id, formData);
+        // Editar empresa existente (sin cambiar contraseña)
+        // eslint-disable-next-line no-unused-vars
+        const { password, ...dataWithoutPassword } = formData;
+        await updateEmpresa(empresaActiva.id, dataWithoutPassword);
         Swal.fire("Éxito", "Empresa actualizada correctamente", "success");
       } else {
-        // Crear nueva empresa
-        await createEmpresa(formData);
-        Swal.fire("Éxito", "Empresa creada correctamente", "success");
+        // Crear nueva empresa con autenticación
+        await registrarEmpresaConAuth(formData);
+        Swal.fire("Éxito", "Empresa creada. Se envió un correo de verificación.", "success");
       }
       
       setShowModal(false);
@@ -84,7 +91,8 @@ export default function AdminEmpresas() {
         direccion: "",
         comuna: "",
         email: "",
-        telefono: ""
+        telefono: "",
+        password: ""
       });
       setEmpresaActiva(null);
       cargarEmpresas();
@@ -92,6 +100,8 @@ export default function AdminEmpresas() {
       console.error("Error al guardar:", error);
       if (error.code === 'already-exists') {
         Swal.fire("Error", "Ya existe una empresa con este RUT", "error");
+      } else if (error.code === 'auth/email-already-in-use') {
+        Swal.fire("Error", "Este correo electrónico ya está registrado", "error");
       } else {
         Swal.fire("Error", "No se pudo guardar la empresa", "error");
       }
@@ -128,7 +138,8 @@ export default function AdminEmpresas() {
         direccion: empresa.direccion || "",
         comuna: empresa.comuna || "",
         email: empresa.email || "",
-        telefono: empresa.telefono || ""
+        telefono: empresa.telefono || "",
+        password: ""
       });
     } else {
       setEmpresaActiva(null);
@@ -138,7 +149,8 @@ export default function AdminEmpresas() {
         direccion: "",
         comuna: "",
         email: "",
-        telefono: ""
+        telefono: "",
+        password: ""
       });
     }
     setShowModal(true);
@@ -153,7 +165,8 @@ export default function AdminEmpresas() {
       direccion: "",
       comuna: "",
       email: "",
-      telefono: ""
+      telefono: "",
+      password: ""
     });
   };
 
@@ -239,7 +252,7 @@ export default function AdminEmpresas() {
                     placeholder="Ingrese el nombre de la empresa"
                     value={formData.nombre}
                     onChange={(e) => setFormData({ ...formData, nombre: e.target.value })}
-                    maxLength="100"
+                    maxLength="50"
                     required
                   />
                 </div>
@@ -251,7 +264,7 @@ export default function AdminEmpresas() {
                     placeholder="12345678-9"
                     value={formData.rut}
                     onChange={(e) => setFormData({ ...formData, rut: e.target.value })}
-                    maxLength="12"
+                    maxLength="50"
                     required
                   />
                 </div>
@@ -263,7 +276,7 @@ export default function AdminEmpresas() {
                     placeholder="Ingrese la dirección completa"
                     value={formData.direccion}
                     onChange={(e) => setFormData({ ...formData, direccion: e.target.value })}
-                    maxLength="150"
+                    maxLength="50"
                     required
                   />
                 </div>
@@ -287,9 +300,15 @@ export default function AdminEmpresas() {
                     placeholder="empresa@ejemplo.com"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                    maxLength="100"
+                    disabled={!!empresaActiva}
+                    maxLength="50"
                     required
                   />
+                  {empresaActiva && (
+                    <small className="text-muted">
+                      El correo no se puede modificar después de la creación
+                    </small>
+                  )}
                 </div>
                 <div className="mb-3">
                   <label className="form-label">Teléfono (opcional)</label>
@@ -299,9 +318,27 @@ export default function AdminEmpresas() {
                     placeholder="Ej: +56 2 1234 5678"
                     value={formData.telefono}
                     onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
-                    maxLength="15"
+                    maxLength="50"
                   />
                 </div>
+                {!empresaActiva && (
+                  <div className="mb-3">
+                    <label className="form-label">Contraseña</label>
+                    <input 
+                      type="password"
+                      className="form-control" 
+                      placeholder="Mínimo 6 caracteres"
+                      value={formData.password}
+                      onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      maxLength="50"
+                      minLength="6"
+                      required
+                    />
+                    <small className="text-muted">
+                      Se enviará un correo de verificación a la empresa
+                    </small>
+                  </div>
+                )}
               </div>
               <div className="modal-footer">
                 <button 

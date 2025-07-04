@@ -3,22 +3,38 @@ import { getUserData } from "../services/userService";
 import { useAuth } from "../context/AuthContext";
 import CardProducto from '../components/CardProducto';
 import CerrarSesion from "../components/CerrarSesion";
+import { useNavigate } from "react-router-dom";
 
 function Home() {
   const { user } = useAuth();
   const [userData, setUserData] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Home component mounted, user:", user);
     const fetch = async () => {
-      const datos = await getUserData(user.uid);
-      setUserData(datos);
+      try {
+        const datos = await getUserData(user.uid);
+        setUserData(datos);
+        console.log("User data loaded:", datos);
+      } catch (error) {
+        console.error("Error loading user data:", error);
+      }
     };
     if (user) fetch();
   }, [user]);
 
   return (
     <div className="container mt-4 home-bg" style={{ minHeight: '100vh' }}>
-      <h2>¡Bienvenido a EcoFood!</h2>
+      <div className="d-flex justify-content-between align-items-center mb-3">
+        <h2>¡Bienvenido a EcoFood!</h2>
+        <button 
+          className="btn btn-secondary" 
+          onClick={() => navigate("/cliente/dashboard")}
+        >
+          Volver al Dashboard
+        </button>
+      </div>
       {userData && (
         <div className="mb-3">
           <strong>Usuario:</strong> {userData.nombre} <br />

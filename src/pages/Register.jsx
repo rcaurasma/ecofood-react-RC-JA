@@ -26,20 +26,20 @@ export default function Register() {
   };
 
   const validatePhone = (phone) => {
-    // Solo números, espacios, guiones y paréntesis, máximo 15 caracteres
+    // Solo números, espacios, guiones y paréntesis, máximo 50 caracteres
     const phoneRegex = /^[0-9\s\-()+ ]+$/;
-    return phone.length === 0 || (phone.length >= 8 && phone.length <= 15 && phoneRegex.test(phone));
+    return phone.length === 0 || (phone.length >= 8 && phone.length <= 50 && phoneRegex.test(phone));
   };
 
   const validateAddress = (address) => {
-    // Letras, números, espacios y algunos caracteres especiales, máximo 100 caracteres
-    return address.length >= 5 && address.length <= 100;
+    // Letras, números, espacios y algunos caracteres especiales, máximo 50 caracteres
+    return address.length >= 5 && address.length <= 50;
   };
 
   const validateComuna = (comuna) => {
-    // Solo letras, espacios y acentos, máximo 30 caracteres
+    // Solo letras, espacios y acentos, máximo 50 caracteres
     const comunaRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$/;
-    return comuna.length >= 2 && comuna.length <= 30 && comunaRegex.test(comuna);
+    return comuna.length >= 2 && comuna.length <= 50 && comunaRegex.test(comuna);
   };
 
   const validateAllFields = () => {
@@ -69,7 +69,7 @@ export default function Register() {
     if (!validateAddress(direccion)) {
       Swal.fire(
         "Dirección inválida",
-        "La dirección debe tener entre 5 y 100 caracteres.",
+        "La dirección debe tener entre 5 y 50 caracteres.",
         "warning"
       );
       return false;
@@ -78,7 +78,7 @@ export default function Register() {
     if (!validateComuna(comuna)) {
       Swal.fire(
         "Comuna inválida",
-        "La comuna debe tener entre 2 y 30 caracteres y solo contener letras.",
+        "La comuna debe tener entre 2 y 50 caracteres y solo contener letras.",
         "warning"
       );
       return false;
@@ -87,7 +87,7 @@ export default function Register() {
     if (telefono && !validatePhone(telefono)) {
       Swal.fire(
         "Teléfono inválido",
-        "El teléfono debe tener entre 8 y 15 caracteres y solo contener números.",
+        "El teléfono debe tener entre 8 y 50 caracteres y solo contener números.",
         "warning"
       );
       return false;
@@ -128,7 +128,7 @@ export default function Register() {
 
   return (
     <div className="container mt-5">
-      
+
       <div className="row justify-content-center">
         <div className="col-md-6 col-lg-5">
           <h2 className="text-center mb-4">Registro Cliente</h2>
@@ -152,7 +152,7 @@ export default function Register() {
             className="form-control" 
             value={email} 
             onChange={(e) => setEmail(e.target.value)} 
-            maxLength="100"
+            maxLength="50"
             required 
           />
         </div>
@@ -174,7 +174,7 @@ export default function Register() {
             className="form-control" 
             value={direccion} 
             onChange={(e) => setDireccion(e.target.value)} 
-            maxLength="100"
+            maxLength="50"
             required 
           />
         </div>
@@ -185,7 +185,7 @@ export default function Register() {
             className="form-control" 
             value={comuna} 
             onChange={(e) => setComuna(e.target.value)} 
-            maxLength="30"
+            maxLength="50"
             required 
           />
         </div>
@@ -196,7 +196,7 @@ export default function Register() {
             className="form-control" 
             value={telefono} 
             onChange={(e) => setTelefono(e.target.value)} 
-            maxLength="15"
+            maxLength="50"
           />
         </div>
         <button type="submit" className="btn btn-success w-100">Registrar</button>

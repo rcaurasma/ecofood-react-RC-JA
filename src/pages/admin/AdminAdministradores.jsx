@@ -1,13 +1,16 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Swal from "sweetalert2";
 import {
   getAdministradores,
   updateAdministrador,
-  // deleteAdministrador,
+  deleteAdministrador,
   registrarAdminConAuth
 } from "../../services/adminFirebase";
+import { AuthContext } from "../../context/AuthContext";
 
 export default function AdminAdministradores() {
+  const { user } = useContext(AuthContext); // Obtener usuario logueado
+  
   const [administradores, setAdministradores] = useState([]);
   const [adminActivo, setAdminActivo] = useState(null);
   const [showModal, setShowModal] = useState(false);
@@ -64,6 +67,36 @@ export default function AdminAdministradores() {
         Swal.fire("Error", "Este correo electrónico ya está registrado", "error");
       } else {
         Swal.fire("Error", "No se pudo guardar el administrador", "error");
+      }
+    }
+  };
+
+  // Eliminación segura - evita que un admin se elimine a sí mismo
+  const eliminar = async (id, nombre) => {
+    const adminAEliminar = administradores.find(a => a.id === id);
+
+    // Verificar que el admin no se elimine a sí mismo
+    if (user && adminAEliminar?.email === user.email) {
+      Swal.fire("Error", "No puedes eliminar tu propio usuario", "error");
+      return;
+    }
+
+    const result = await Swal.fire({
+      title: `¿Eliminar administrador "${nombre}"?`,
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar"
+    });
+
+    if (result.isConfirmed) {
+      try {
+        await deleteAdministrador(id);
+        Swal.fire("Eliminado", "Administrador eliminado correctamente", "success");
+        cargarAdministradores();
+      } catch {
+        Swal.fire("Error", "No se pudo eliminar el administrador", "error");
       }
     }
   };
@@ -156,15 +189,20 @@ export default function AdminAdministradores() {
                     <i className="fas fa-edit"></i> Editar
                   </button>
 
-                                    {/*
-                  <button 
-                    className="btn btn-danger btn-sm" 
-                    onClick={() => eliminar(admin.id, admin.nombre)}
-                  >
-                    <i className="fas fa-trash"></i> Eliminar
-                  </button>
-                */}
-
+                  {/* Mostrar botón de eliminar solo si no es el mismo usuario */}
+                  {user && admin.email !== user.email && (
+                    <button 
+                      className="btn btn-danger btn-sm" 
+                      onClick={() => eliminar(admin.id, admin.nombre)}
+                    >
+                      <i className="fas fa-trash"></i> Eliminar
+                    </button>
+                  )}
+                  
+                  {/* Mostrar mensaje si es el mismo usuario */}
+                  {user && admin.email === user.email && (
+                    <span className="text-muted small">No puedes eliminarte</span>
+                  )}
                 </td>
               </tr>
             ))}
@@ -211,7 +249,7 @@ export default function AdminAdministradores() {
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     disabled={!!adminActivo}
-                    maxLength="100"
+                    maxLength="50"
                     required
                   />
                   {adminActivo && (
@@ -229,6 +267,7 @@ export default function AdminAdministradores() {
                       placeholder="Mínimo 6 caracteres"
                       value={formData.password}
                       onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                      maxLength="50"
                       minLength="6"
                       required
                     />

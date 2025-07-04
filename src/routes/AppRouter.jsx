@@ -7,6 +7,8 @@ import RecuperarContrasena from "../pages/RecuperarContrasena";
 import ProtectedByRole from "./ProtectedByRole";
 //Cliente
 import ClienteDashboard from '../pages/cliente/ClienteDashboard';
+//Empresa
+import EmpresaDashboard from '../pages/empresa/EmpresaDashboard';
 //Admin
 import AdminLayout from  "../components/layouts/Admin/AdminLayout"
 import AdminDashboard from "../pages/admin/AdminDashboard";
@@ -31,6 +33,11 @@ export default function AppRouter() {
     <Route path="/cliente/dashboard" element={
     <ProtectedByRole allowed={["cliente"]}>
     <ClienteDashboard />
+    </ProtectedByRole>
+    } />
+    <Route path="/empresa/dashboard" element={
+    <ProtectedByRole allowed={["empresa"]}>
+    <EmpresaDashboard />
     </ProtectedByRole>
     } />
     <Route path="/admin" element={

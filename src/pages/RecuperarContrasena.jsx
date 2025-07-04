@@ -50,6 +50,7 @@ export default function RecuperarContrasena() {
                     value={resetEmail}
                     onChange={(e) => setResetEmail(e.target.value)}
                     placeholder="Ingresa tu correo electrónico"
+                    maxLength="50"
                     required
                     disabled={loading}
                   />
