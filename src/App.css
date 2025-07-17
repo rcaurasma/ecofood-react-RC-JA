@@ -1,0 +1,37 @@
+html, body, #root {
+  height: 100%;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.card {
+  padding: 2em;
+}
+
+body {
+  background-image: url('/FondoVerde.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+  color: #fff;
+}
+
+body, #root, .container, .home-bg {
+  background: none !important;
+  background-color: transparent !important;
+  position: relative;
+  z-index: 1;
+  color: #fff !important;
+}
+
+h1, h2, h3, h4, h5, h6, label, input, button, .form-label, .form-control, .btn {
+  color: #fff !important;
+}
