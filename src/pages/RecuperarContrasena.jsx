@@ -33,10 +33,11 @@ export default function RecuperarContrasena() {
   };
 
   return (
-    <div className="container mt-5">
-      <div className="row justify-content-center">
-        <div className="col-md-6 col-lg-5">
-          <h2 className="card-title text-center mb-4">Recuperar Contraseña</h2>
+    <div className="auth-page public-page">
+      <div className="container mt-5">
+        <div className="row justify-content-center">
+          <div className="col-md-6 col-lg-5">
+            <h2 className="card-title text-center mb-4">Recuperar Contraseña</h2>
           <p className="text-muted text-center mb-4">
             Ingresa tu correo electrónico y te enviaremos un enlace para restablecer tu contraseña.
           </p>
@@ -76,8 +77,9 @@ export default function RecuperarContrasena() {
                   Volver al Login
                 </button>
               </div>
-            </div>
           </div>
         </div>
+      </div>
+    </div>
   );
 }

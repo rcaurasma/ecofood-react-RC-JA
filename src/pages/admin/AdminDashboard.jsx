@@ -97,31 +97,6 @@ export default function AdminDashboard() {
           </div>
         </div>
       </div>
-
-      {/* Información del sistema */}
-      <div className="row">
-        <div className="col-12">
-          <div className="card">
-            <div className="card-header">
-              <h5>
-                <i className="fas fa-chart-line me-2"></i>
-                Resumen del Sistema
-              </h5>
-            </div>
-            <div className="card-body">
-              <div className="alert alert-success">
-                <h6>
-                  <i className="fas fa-check-circle me-2"></i>
-                  Sistema Operativo
-                </h6>
-                <p className="mb-0">
-                  EcoFood está funcionando correctamente. Todas las funciones principales están activas.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
     </div>
   );
 }

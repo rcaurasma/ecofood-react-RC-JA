@@ -2,11 +2,8 @@
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color-scheme: light;
+  color: #333;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,52 +15,41 @@ a {
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
 }
 
-
 body {
- /* margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  position: relative;
-  */
   min-height: 100vh;
-  /* Quitamos la imagen de fondo aquí para usar ::before */
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(rgba(248, 249, 250, 0.34), rgba(248, 249, 250, 0.34)), url('/FondoVerde.png');
+  background-size: 300px 300px;
+  background-repeat: repeat;
+  background-attachment: fixed;
+  color: #333;
 }
 
-body::before {
-  content: "";
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background-image: url('/FondoVerde.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  z-index: 0;
-  pointer-events: none;
-  filter: opacity(0.55);
-}
-
-body, h1, h2, h3, h4, h5, h6, label, input, button, .form-label, .form-control, .btn {
-  font-weight: bold !important;
-}
-
-#root, .container, .home-bg {
+/* Estilos para contenido principal */
+#root {
   position: relative;
   z-index: 1;
+  min-height: 100vh;
+  background: transparent; /* Asegurar que sea transparente */
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+.container {
+  position: relative;
+  z-index: 2;
 }
 
+/* Estilos de texto por defecto solo para elementos que no tienen estilo específico */
+body h1, body h2, body h3, body h4, body h5, body h6 {
+  font-weight: bold;
+}
+
+/* Botones generales */
 button {
   border-radius: 8px;
   border: 1px solid transparent;
@@ -71,27 +57,86 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
 button:hover {
   border-color: #646cff;
 }
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Media queries para modo claro */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
-    background-color: #ffffff;
+    /* No sobrescribir el background aquí */
   }
+  
   a:hover {
     color: #747bff;
   }
+  
   button {
     background-color: #f9f9f9;
   }
+}
+
+/* Estilos para páginas de autenticación con fondo de imagen */
+.auth-page .col-md-6 {
+  background-color: rgba(255, 255, 255, 0.95); /* Fondo blanco semi-transparente solo para el formulario */
+  border-radius: 15px;
+  padding: 30px;
+  margin-top: 50px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px); /* Efecto de desenfoque sutil */
+}
+
+/* Remover fondo del container general */
+.auth-page .container {
+  background: transparent;
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.auth-page h2 {
+  color: #2d5016; /* Verde oscuro para títulos */
+  font-weight: bold;
+  margin-bottom: 30px;
+}
+
+.auth-page .form-control {
+  border: 2px solid #e9ecef;
+  border-radius: 8px;
+  padding: 12px 15px;
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+.auth-page .form-control:focus {
+  border-color: #6c932f;
+  box-shadow: 0 0 0 0.2rem rgba(108, 147, 47, 0.25);
+  background-color: rgba(255, 255, 255, 1);
+}
+
+.auth-page .btn-success {
+  background-color: #6c932f;
+  border-color: #6c932f;
+  font-weight: bold;
+  padding: 12px 20px;
+}
+
+.auth-page .btn-success:hover {
+  background-color: #5a7a28;
+  border-color: #5a7a28;
+}
+
+.auth-page .btn-warning {
+  background-color: #ffc107;
+  border-color: #ffc107;
+  color: #212529;
+  font-weight: bold;
 }

@@ -1,0 +1,64 @@
+/* CSS para solucionar problemas de barras de navegación fantasma */
+
+/* Resetear cualquier navbar o elemento de navegación que no debería estar */
+body > nav,
+body > .navbar,
+body > div > nav:first-child,
+body > div > .navbar:first-child {
+  display: none !important;
+}
+
+/* Asegurar que solo las páginas de admin muestren la barra de navegación */
+.admin-layout nav.navbar,
+.admin-layout .navbar {
+  display: block !important;
+}
+
+/* Eliminar cualquier padding-top que pueda estar causando espacio extra */
+body {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+/* Asegurar que el contenido principal no tenga margin-top innecesario */
+.container:first-child,
+.container-fluid:first-child {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+/* Específicamente para páginas de login, registro, etc. */
+.auth-page {
+  padding-top: 0 !important;
+  margin-top: 0 !important;
+}
+
+.auth-page .container {
+  padding-top: 2rem;
+}
+
+/* Eliminar cualquier elemento Bootstrap que pueda estar creando barras fantasma */
+.navbar-collapse:not(.admin-layout .navbar-collapse) {
+  display: none !important;
+}
+
+/* Asegurar que los elementos fixed no interfieran */
+.fixed-top:not(.admin-layout .fixed-top) {
+  display: none !important;
+}
+
+/* Estilos específicos para evitar interferencias en páginas públicas */
+.public-page {
+  position: relative;
+  z-index: 10;
+  min-height: 100vh;
+}
+
+.public-page::before {
+  content: none;
+}
+
+/* Evitar que Bootstrap JS cree elementos dinámicos no deseados */
+.navbar-toggler:not(.admin-layout .navbar-toggler) {
+  display: none !important;
+}
