@@ -1,11 +1,12 @@
 import { useState, useEffect, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import Swal from "sweetalert2";
 import { deleteProducto, getProductosByEmpresaPagina, obtenerTotalProductos } from "../../services/productoService";
 import ProductoCard from "../../components/ProductoCard";
 import ProductoModal from "../../components/ProductoModal";
-
 export default function ProductosEmpresa() {
+  const navigate = useNavigate();
   const { userData } = useAuth();
   
   // Estados para productos y paginación
@@ -185,6 +186,17 @@ export default function ProductosEmpresa() {
       <div className="container mt-4">
         <div className="row">
           <div className="col">
+            {/* Botón de regreso */}
+            <div className="mb-3">
+              <button 
+                className="btn btn-outline-secondary"
+                onClick={() => navigate("/empresa/dashboard")}
+              >
+                <i className="fas fa-arrow-left me-2"></i>
+                Volver al Dashboard
+              </button>
+            </div>
+            
             <div className="d-flex justify-content-between align-items-center mb-4">
               <h3>
                 <i className="fas fa-box me-2"></i>
